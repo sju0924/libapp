@@ -42,7 +42,7 @@
                class="lighten -3 pa-10"
               min-height="70vh"
               rounded="lg">
-                <component v-bind:is="getTab"></component>
+                <component v-bind:is="getTab" @searchBookTitle='searchBookByTitle' :buf='titleBuf'></component>
             </v-sheet>
           </v-col>
 
@@ -55,10 +55,9 @@
 <script>
 /* eslint-disable */
 import SearchTab from "./Search.vue";
-import InventoryTab from "./Inventory.vue"
+import BookTab from "./Book.vue"
 import RankingTab from "./Ranking.vue"
-import RecommendationTab from "./Recommendation.vue"
-import SeriesTab from "./Series.vue"
+import NewTab from "./New.vue"
 
 export default {
     name: 'SearchPage',
@@ -66,23 +65,32 @@ export default {
           currentTab : "Search",
           links: [
             'Search',
-            'Inventory',
+            'Book',
             'Ranking',
-            'Recommendation',
-            'Series'
+            'New'
           ],
+          titleBuf: ""
         }),
     components:{
         SearchTab,
-        InventoryTab,
+        BookTab,
         RankingTab,
-        RecommendationTab,
-        SeriesTab
+        NewTab
     },
     methods:{
         movePage(param){
             this.currentTab = param;
             console.log(this.currentTab)
+        },
+        searchBookByTitle(searchBookTitle){
+            if(searchBookTitle != ""){
+                console.log('Main,',searchBookTitle);
+                            this.titleBuf = searchBookTitle;
+                            this.currentTab = 'Book'
+            }
+
+
+
         }
     },
     computed: {
